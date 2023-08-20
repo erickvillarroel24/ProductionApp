@@ -53,3 +53,16 @@ st.image(image, width=100, use_column_width=True)
 
 # Insert subheader
 st.subheader("**Production Fundamentals**")
+
+file = st.sidebar.file_uploader("Upload your csv file")
+
+def data(dataframe):
+    st.subheader("**View dataframe**")
+    st.write(dataframe.head())
+    st.subheader("**Statistical summary**")
+    st.write(dataframe.describe())
+
+if file:
+    df = pd.read_excel(file)
+    df1 = df['date']
+    data(df1)
