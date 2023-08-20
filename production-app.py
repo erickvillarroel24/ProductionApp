@@ -8,7 +8,7 @@ import plotly.express as px
 from PIL import Image
 
 # Insert an icon
-icon = Image.open("Resources/image1.avif")
+icon = Image.open("Resources/image1.jpg")
 
 # state the design of the app
 st.set_page_config(page_title="DE App", page_icon=icon)
