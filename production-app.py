@@ -95,6 +95,7 @@ if file:
         listwat.append(np.mean(listwat2))
     df2= pd.DataFrame({'date':listend,'oil_rate':listoil,'oil_water':listwat})
     data(df2)
+    #
 
 
 
