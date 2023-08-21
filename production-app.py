@@ -64,5 +64,41 @@ def data(dataframe):
 
 if file:
     df = pd.read_excel(file)
-    df1 = df['date']
-    data(df1)
+    df1 = pd.DataFrame(df)
+    #data(df1)
+    dcol=df1[["date","oil_rate","water_rate"]]
+    coldate= list(dcol["date"])
+    coloil= list(dcol["oil_rate"])
+    colwat= list(dcol["water_rate"])
+    listdate=[]
+    cant= len(coldate)
+    for i in range(cant):
+        date1 = coldate[i].strftime('%Y/%m/%d')
+        date2 = date1[0:4]
+        listdate.append(date2)
+    listdate_int = list(map(int, listdate))
+    date_uni= list(set(listdate_int))
+    date_uni.sort()
+    bucl= len(date_uni)
+    listend=[]
+    listoil=[]
+    listwat=[]
+    for i in range(bucl):
+        listoil1 = []
+        listwat2 = []
+        for x in range(cant):
+            if int(listdate[x]) == date_uni[i]:
+                listoil1.append(coloil[x])
+                listwat2.append(colwat[x])
+        listend.append(date_uni[i])
+        listoil.append(np.mean(listoil1))
+        listwat.append(np.mean(listwat2))
+    df2= pd.DataFrame({'date':listend,'oil_rate':listoil,'oil_water':listwat})
+    data(df2)
+
+
+
+
+
+
+
