@@ -56,69 +56,55 @@ st.image(image, width=100, use_column_width=True)
 # Insert subheader
 st.subheader("**Production**")
 
+#Create Menu
+st.sidebar.title("⬇ Navigation")
 file = st.sidebar.file_uploader("Upload your csv file")
 
-def data(dataframe):
+# Add sections of the app
+with st.sidebar:
+    options = option_menu(
+        menu_title="Menu",
+        options=["Home", "Data", "3D Plots", "Basic Calculations"],
+        icons=["house", "tv-fill", "box", "calculator"],)
+
+
+
+def plots(dataframe):
 
     st.write(dataframe)
 
     st.subheader("***Production History***")
     fig1, ax1 = plt.subplots()
-    ax1.bar(list(dataframe['date']), list(dataframe['oil_rate']))
+    ax1.plot(list(dataframe['date']), list(dataframe['oil_rate']))
     plt.title('Annual Oil Production')
     plt.xlabel('Years')
     plt.ylabel('Rate (BBL/D)')
     st.pyplot(fig1)
 
     fig2, ax2 = plt.subplots()
-    ax2.bar(list(dataframe['date']), list(dataframe['water_rate']))
+    ax2.plot(list(dataframe['date']), list(dataframe['water_rate']))
     plt.title('Annual Water Production')
     plt.xlabel('Years')
     plt.ylabel('Rate (BBL/D)')
     st.pyplot(fig2)
 
     fig3, ax3 = plt.subplots()
-    ax3.bar(list(dataframe['date']), list(dataframe['total_rate']))
+    aq = dataframe[['date', 'oil_rate', 'water_rate']]
+    ax3.plot(list(aq['date']), list(aq['water_rate']))
+    ax3.plot(list(aq['date']), list(aq['oil_rate']))
     plt.title('Annual Total Production')
     plt.xlabel('Years')
     plt.ylabel('Rate (BBL/D)')
     st.pyplot(fig3)
-
-
 if file:
-    df = pd.read_excel(file)
+    df = pd.read_excel(file, index_col=0)
     df1 = pd.DataFrame(df)
-    #data(df1)
-    dcol=df1[["date","oil_rate","water_rate"]]
-    coldate= list(dcol["date"])
-    coloil= list(dcol["oil_rate"])
-    colwat= list(dcol["water_rate"])
-    listdate=[]
-    cant= len(coldate)
-    for i in range(cant):
-        date1 = coldate[i].strftime('%Y/%m/%d')
-        date2 = date1[0:4]
-        listdate.append(date2)
-    listdate_int = list(map(int, listdate))
-    date_uni= list(set(listdate_int))
-    date_uni.sort()
-    bucl= len(date_uni)
-    listend=[]
-    listoil=[]
-    listwat=[]
-    for i in range(bucl):
-        listoil1 = []
-        listwat2 = []
-        for x in range(cant):
-            if int(listdate[x]) == date_uni[i]:
-                listoil1.append(coloil[x])
-                listwat2.append(colwat[x])
-        listend.append(date_uni[i])
-        listoil.append(np.mean(listoil1))
-        listwat.append(np.mean(listwat2))
-    df2= pd.DataFrame({'date':listend,'oil_rate':listoil,'water_rate':listwat,
-                       'total_rate': list(np.array(listoil)+np.array(listwat))})
-    data(df2)
+    if options == "Data":
+        df1
+    elif options == "3D Plots":
+        plots(df)
+    elif options== "Basic Calculations":
+        st.write("Muy pronto")
 
 
 
