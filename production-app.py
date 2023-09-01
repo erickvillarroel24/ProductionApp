@@ -56,12 +56,25 @@ expander.write("This is an open-source web app fully programmed in Python for ca
 image = Image.open("Resources/image2.jpg")
 st.image(image, width=100, use_column_width=True)
 
-# Insert subheader
-st.subheader("**Production**")
+#Write subheader
+st.write("---")
+st.subheader("**Fundamentals of the oil industry**")
+
+# Insert video
+video = open("Resources/video1.mp4", "rb")
+st.video(video)
+
+# Insert caption
+st.caption("*Video about Exploration and Production*")
+#Logo
+
+logo = Image.open("Resources/img.png")
+st.sidebar.image(logo)
 
 #Create Menu
-st.sidebar.title("⬇ Navigation")
+st.sidebar.title("⬇ Menu")
 file = st.sidebar.file_uploader("Upload your csv file")
+
 
 # Add sections of the app
 with st.sidebar:
@@ -76,30 +89,31 @@ with st.sidebar:
 def plots(dataframe):
 
     st.write(dataframe)
-
+    w=[]
     st.subheader("***Production History***")
     fig1, ax1 = plt.subplots()
-    ax1.plot(list(dataframe['date']), list(dataframe['oil_rate']))
-    plt.title('Annual Oil Production')
+    ax1.plot(list(dataframe['date']), list(dataframe['oil_rate']), color= "red")
+    plt.axis(w)
+    st.title('Annual Oil Production')
     plt.xlabel('Years')
     plt.ylabel('Rate (BBL/D)')
-    st.pyplot(fig1)
+    st.plotly_chart(fig1)
 
     fig2, ax2 = plt.subplots()
-    ax2.plot(list(dataframe['date']), list(dataframe['water_rate']))
-    plt.title('Annual Water Production')
+    ax2.plot(list(dataframe['date']), list(dataframe['water_rate']), color="green")
+    st.title('Annual Water Production')
     plt.xlabel('Years')
     plt.ylabel('Rate (BBL/D)')
-    st.pyplot(fig2)
+    st.plotly_chart(fig2)
 
     fig3, ax3 = plt.subplots()
     aq = dataframe[['date', 'oil_rate', 'water_rate']]
-    ax3.plot(list(aq['date']), list(aq['water_rate']))
-    ax3.plot(list(aq['date']), list(aq['oil_rate']))
-    plt.title('Annual Total Production')
+    ax3.plot(list(aq['date']), list(aq['water_rate']), color="red")
+    ax3.plot(list(aq['date']), list(aq['oil_rate']), color="green")
+    st.title('Annual Total Production')
     plt.xlabel('Years')
     plt.ylabel('Rate (BBL/D)')
-    st.pyplot(fig3)
+    st.plotly_chart(fig3)
 
 
 
