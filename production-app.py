@@ -122,9 +122,9 @@ if file:
     df1 = pd.DataFrame(df)
     if options == "Data":
         df1
-    elif options == "3D Plots":
+    elif options == "Plots":
         plots(df)
-if options == "calculations":
+if options == "Calculations":
     if st.checkbox("Potential resevoir"):
         Data = namedtuple("Input", "q_test pwf_test pr pwf pb ef ef2")
         st.subheader("**Enter input values**")
@@ -160,7 +160,7 @@ if options == "calculations":
         q = IPR_curve_methods(q_test, pwf_test, pr, arr_pwf, pb, method)
         st.pyplot(q)
 
-if options == "Analisis nodal":
+if options == "Nodal Analisis":
     Data = namedtuple("Input", "q_test pwf_test q pr pb sg_h2o API Q ID c wc")
     st.subheader("**Enter input values**")
     q_test = st.number_input("Enter q_test Value: ")
