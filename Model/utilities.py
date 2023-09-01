@@ -227,7 +227,7 @@ def IPR_curve_methods(q_test, pwf_test, pr, pwf:list, pb, method, ef=1, ef2=None
         df['Qo(bpd)'] = df['Pwf(psia)'].apply(lambda x: qo_darcy(q_test, pwf_test, pr, x, pb))
     elif method == 'Vogel':
         df['Qo(bpd)'] = df['Pwf(psia)'].apply(lambda x: qo_vogel(q_test, pwf_test, pr, x, pb))
-    elif method == 'IPR_compuesto':
+    elif method == 'IPR Compuesto':
         df['Qo(bpd)'] = df['Pwf(psia)'].apply(lambda x: qo_ipr_compuesto(q_test, pwf_test, pr, x, pb))
     # Stand the axis of the IPR plot
     x = df['Qo(bpd)']
