@@ -1,16 +1,16 @@
 #Import Python libraries
 
-import streamlit as st
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from streamlit_option_menu import option_menu
-import plotly.express as px
-from PIL import Image
 from collections import namedtuple
-import seaborn as sns
-from Model.utilities import qo_darcy, j, Qb, aof, qo_vogel, qo_darcy, qo_standing, qo, \
-    IPR_Curve, IPR_curve_methods, pwf_darcy, pwf_vogel, f_darcy, sg_oil, sg_avg, gradient_avg
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import streamlit as st
+from PIL import Image
+from streamlit_option_menu import option_menu
+
+from Model.utilities import j, aof, qo, \
+    IPR_curve_methods, pwf_darcy, pwf_vogel, f_darcy, sg_oil, sg_avg, gradient_avg
 
 # Insert an icon
 icon = Image.open("Resources/image1.jpg")
@@ -136,17 +136,20 @@ if options == "calculations":
 
     elif st.checkbox("IPR Curve"):
         st.subheader("**Select method**")
-        method = st.selectbox("Method", ("Darcy", "Vogel", "IPR Compuesto", "Standing"))
-        Data = namedtuple("Input", "q_test pwf_test pr pwf pb ef ef2")
+        method = st.selectbox("Method", ("Darcy", "Vogel", "IPR Compuesto"))
+        Data = namedtuple("Input", "q_test pwf_test pr pwf pb")
         st.subheader("**Enter input values**")
         q_test = st.number_input("Enter q_test value: ")
         pwf_test = st.number_input("Enter pw_test value: ")
         pr = st.number_input("Enter pr value: ")
-        pwf = st.number_input("Enter pwf value")
         pb = st.number_input("Enter pb value")
-        ef = st.number_input("Enter ef value")
-        ef2 = st.number_input("Enter ef2 value")
-        q = IPR_curve_methods(q_test, pwf_test, pr, pwf, pb, method, ef=1, ef2=None)
+        pwf=[]
+        for i in range(0,int(pr+100),100):
+            pwf.append(i)
+        pwf.reverse()
+        arr_pwf=np.array(pwf, dtype=int)
+        q = IPR_curve_methods(q_test, pwf_test, pr, arr_pwf, pb, method)
+        st.pyplot(q)
 
 if options == "Analisis nodal":
     Data = namedtuple("Input", "q_test pwf_test q pr pb sg_h2o API Q ID c wc")
