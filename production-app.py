@@ -17,8 +17,9 @@ icon = Image.open("Resources/image1.jpg")
 st.set_page_config(page_title="VC APP", page_icon=icon)
 
 # Insert css codes to improve the design of the app
+
 st.markdown(
-    """
+"""
 <style>
 h1 {text-align: center;
 }
@@ -26,13 +27,15 @@ body {background-color: #DCE3D5;
       width: 1400px;
       margin: 15px auto;
 }
+[data-testid=stSidebar] {
+        background-color: #87CEEB;
+    }
 footer {
   display: none;
 }
 </style>""",
     unsafe_allow_html=True,
 )
-
 # Insert title of the app
 st.title("Production Engineering App ®")
 
@@ -92,6 +95,7 @@ def plots(dataframe):
     st.title('Annual Oil Production')
     plt.xlabel('Years')
     plt.ylabel('Rate (BBL/D)')
+    plt.grid()
     st.plotly_chart(fig1)
 
     fig2, ax2 = plt.subplots()
@@ -99,15 +103,17 @@ def plots(dataframe):
     st.title('Annual Water Production')
     plt.xlabel('Years')
     plt.ylabel('Rate (BBL/D)')
+    plt.grid()
     st.plotly_chart(fig2)
 
     fig3, ax3 = plt.subplots()
     aq = dataframe[['date', 'oil_rate', 'water_rate']]
-    ax3.plot(list(aq['date']), list(aq['water_rate']), color="red")
-    ax3.plot(list(aq['date']), list(aq['oil_rate']), color="green")
+    ax3.plot(list(aq['date']), list(aq['water_rate']), color="red", label="Water Production")
+    ax3.plot(list(aq['date']), list(aq['oil_rate']), color="green", label="Oil Production")
     st.title('Annual Total Production')
     plt.xlabel('Years')
     plt.ylabel('Rate (BBL/D)')
+    plt.grid()
     st.plotly_chart(fig3)
 
 
