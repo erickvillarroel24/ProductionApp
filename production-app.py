@@ -86,11 +86,9 @@ with st.sidebar:
 def plots(dataframe):
 
     st.write(dataframe)
-    w=[]
     st.subheader("***Production History***")
     fig1, ax1 = plt.subplots()
     ax1.plot(list(dataframe['date']), list(dataframe['oil_rate']), color= "red")
-    plt.axis(w)
     st.title('Annual Oil Production')
     plt.xlabel('Years')
     plt.ylabel('Rate (BBL/D)')
