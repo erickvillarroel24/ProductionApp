@@ -1,7 +1,5 @@
 #Import Python libraries
-
 from collections import namedtuple
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -16,7 +14,7 @@ from Model.utilities import j, aof, qo, \
 icon = Image.open("Resources/image1.jpg")
 
 # state the design of the app
-st.set_page_config(page_title="DE App", page_icon=icon)
+st.set_page_config(page_title="VC APP", page_icon=icon)
 
 # Insert css codes to improve the design of the app
 st.markdown(
@@ -49,14 +47,15 @@ analysis for single phase flow and reservoir potential calculations.
 
 # Add additional information
 expander = st.expander("Information")
-expander.write("This is an open-source web app fully programmed in Python for calculating"
+expander.write("This is an open-source web app fully programmed in Python "
+               "for calculating"
                " production parameters.")
 
 # Insert image
 image = Image.open("Resources/image2.jpg")
 st.image(image, width=100, use_column_width=True)
 
-#Write subheader
+# Write subheader
 st.write("---")
 st.subheader("**Fundamentals of the oil industry**")
 
@@ -66,12 +65,12 @@ st.video(video)
 
 # Insert caption
 st.caption("*Video about Exploration and Production*")
-#Logo
 
-logo = Image.open("Resources/img.png")
+# Our Logo
+logo = Image.open("Resources/VC.png")
 st.sidebar.image(logo)
 
-#Create Menu
+# Creation of Menu
 st.sidebar.title("⬇ Menu")
 file = st.sidebar.file_uploader("Upload your csv file")
 
@@ -80,12 +79,10 @@ file = st.sidebar.file_uploader("Upload your csv file")
 with st.sidebar:
     options = option_menu(
         menu_title="Menu",
-        options=["Home", "Data", "3D Plots", "calculations", "Analisis nodal"],
+        options=["Home", "Data", "Plots", "Calculations", "Nodal Analysis"],
         icons=["house", "tv-fill", "box", "calculator"],)
 
 #Qo(bpd) @ all conditions
-
-
 def plots(dataframe):
 
     st.write(dataframe)
